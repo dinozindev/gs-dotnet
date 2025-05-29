@@ -953,7 +953,7 @@ confirmaPostagens.MapGet("/postagem/{postagemId}", async ([Description("Identifi
             .Select(ConfirmaPostagemReadDto.ToDto)
             .ToList();
         
-        return Results.Ok(confirmaPostagensDto);
+        return confirmaPostagensDto.Count == 0 ? Results.NoContent() : Results.Ok(confirmaPostagensDto);
     })
     .WithSummary("Retorna a lista de todos as confirmações de uma Postagem")
     .WithDescription("Retorna a lista de todas as confirmações de uma Postagem cadastrados no sistema.")
@@ -980,21 +980,25 @@ confirmaPostagens.MapGet("/count/{postagemId}", async ([Description("Identificad
     .Produces(StatusCodes.Status500InternalServerError);
 
 // Retorna se o usuário já confirmou a postagem
-confirmaPostagens.MapGet("/usuario/{usuarioId:int}/postagem/{postagemId:int}", 
+confirmaPostagens.MapGet("/usuario/{usuarioId}/postagem/{postagemId}", 
         async (int usuarioId, int postagemId, AppDbContext db) =>
         {
             var confirma = await db.ConfirmaPostagens
                 .FirstOrDefaultAsync(cp => cp.UsuarioId == usuarioId && cp.PostagemId == postagemId);
+
+            if (confirma == null)
+            {
+                return Results.NoContent();
+            }
             
             var confirmaDto = ConfirmaPostagemReadDto.ToDto(confirma);
             
-            // Retorna um objeto vazio, ou null, em vez de 404
-            return Results.Ok(confirmaDto); // retorna null se não achar, com status 200
+            return Results.Ok(confirmaDto); 
         })
     .WithSummary("Verifica se o usuário confirmou uma postagem")
     .WithDescription("Retorna os dados da confirmação caso exista.")
     .Produces<ConfirmaPostagemReadDto>(StatusCodes.Status200OK)
-    .Produces(StatusCodes.Status404NotFound)
+    .Produces(StatusCodes.Status204NoContent)
     .Produces(StatusCodes.Status500InternalServerError);
 
 
