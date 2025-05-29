@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-A Swift Safety é uma empresa inovadora que desenvolveu uma plataforma digital colaborativa para monitoramento e comunicação sobre desastres na cidade de São Paulo. Nosso objetivo é permitir que usuários, órgãos governamentais e sensores IoT trabalhem em conjunto para informar em tempo real ocorrências como enchentes, deslizamentos e outras situações de risco, promovendo maior segurança e agilidade na resposta a emergências.
+A Swift Safety é uma empresa inovadora que desenvolve uma plataforma digital colaborativa para monitoramento e comunicação sobre desastres na cidade de São Paulo. Nosso objetivo é permitir que usuários, órgãos governamentais e sensores IoT trabalhem em conjunto para informar em tempo real ocorrências como enchentes, deslizamentos e outras situações de risco, promovendo maior segurança e agilidade na resposta a emergências.
 
 A plataforma nasce da necessidade de superar um dos maiores desafios operacionais enfrentados atualmente: a falta de integração e padronização na gestão de informações relacionadas a desastres urbanos. A Swift Safety oferece uma solução tecnológica que combina relatos feitos diretamente pelos usuários, sensores inteligentes e órgãos públicos, garantindo rastreabilidade, controle e visibilidade contínua dos eventos que impactam a cidade.
 
@@ -1154,8 +1154,8 @@ Códigos de Resposta
 
 | Código HTTP       | Significado                     | Quando ocorre                                                  |
 |-------------------|----------------------------------|----------------------------------------------------------------|
-| 200 OK            | Requisição bem-sucedida         | Quando a postagem é encontrada                     |
-| 404 Not Found     | Recurso não encontrado          | Quando a postagem especificada não é encontrada              |
+| 200 OK            | Requisição bem-sucedida         | Quando a postagem é encontrada juntamente com suas confirmações                    |
+| 204 No Content | Sem conteúdo a retornar      | Quando não há confirmações cadastradas                        |
 | 500 Internal Server Error | Erro interno             | Quando ocorre uma falha inesperada no servidor                 |
 
 - #### Retorna a contagem de confirmações para uma postagem
@@ -1210,7 +1210,7 @@ Códigos de Resposta
 | Código HTTP       | Significado                     | Quando ocorre                                                  |
 |-------------------|----------------------------------|----------------------------------------------------------------|
 | 200 OK            | Requisição bem-sucedida         | Quando a confirmação é encontrada                     |
-| 404 Not Found     | Recurso não encontrado          | Quando a confirmação especificada não é encontrada              |
+| 204 No Content    | Sem conteúdo a retornar         | Quando a confirmação especificada não é encontrada              |
 | 500 Internal Server Error | Erro interno             | Quando ocorre uma falha inesperada no servidor                 |
 
 - #### Confirma uma postagem
