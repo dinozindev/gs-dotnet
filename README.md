@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-A Swift Safety é uma empresa inovadora que desenvolve uma plataforma digital colaborativa para monitoramento e comunicação sobre desastres na cidade de São Paulo. Nosso objetivo é permitir que usuários, órgãos governamentais e sensores IoT trabalhem em conjunto para informar em tempo real ocorrências como enchentes, deslizamentos e outras situações de risco, promovendo maior segurança e agilidade na resposta a emergências.
+A Swift Safety é uma empresa inovadora que desenvolveu uma plataforma digital colaborativa para monitoramento e comunicação sobre desastres na cidade de São Paulo. Nosso objetivo é permitir que usuários, órgãos governamentais e sensores IoT trabalhem em conjunto para informar em tempo real ocorrências como enchentes, deslizamentos e outras situações de risco, promovendo maior segurança e agilidade na resposta a emergências.
 
 A plataforma nasce da necessidade de superar um dos maiores desafios operacionais enfrentados atualmente: a falta de integração e padronização na gestão de informações relacionadas a desastres urbanos. A Swift Safety oferece uma solução tecnológica que combina relatos feitos diretamente pelos usuários, sensores inteligentes e órgãos públicos, garantindo rastreabilidade, controle e visibilidade contínua dos eventos que impactam a cidade.
 
