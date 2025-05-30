@@ -218,7 +218,7 @@ Códigos de Resposta
 
 | Código HTTP       | Significado                     | Quando ocorre                                                  |
 |-------------------|----------------------------------|----------------------------------------------------------------|
-| 200 OK   | Requisição bem-sucedida         | Quando a remoção do usuário é válida, retornando uma mensagem de êxito   |
+| 204 No Content    | Sem conteúdo a retornar         | Quando o usuário é removido com sucesso  |
 | 404 Not Found     | Recurso não encontrado          | Quando o usuário especificado não é encontrado               |
 | 500 Internal Server Error | Erro interno             | Quando ocorre uma falha inesperada no servidor                 |
 
@@ -895,7 +895,7 @@ Códigos de Resposta
 
 | Código HTTP       | Significado                     | Quando ocorre                                                  |
 |-------------------|----------------------------------|----------------------------------------------------------------|
-| 200 OK   | Requisição bem-sucedida         | Quando a remoção da postagem é válida, retornando uma mensagem de êxito   |
+| 204 No Content    | Sem conteúdo a retornar         | Quando a postagem é removida com sucesso  |
 | 404 Not Found     | Recurso não encontrado          | Quando a postagem especificada não é encontrada               |
 | 500 Internal Server Error | Erro interno             | Quando ocorre uma falha inesperada no servidor                 |
 
