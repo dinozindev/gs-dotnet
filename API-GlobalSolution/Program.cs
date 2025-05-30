@@ -301,13 +301,13 @@ usuarios.MapDelete("/{id}", async ([Description("Identificador único do Usuári
     {
         db.Usuarios.Remove(existingUsuario);
         await db.SaveChangesAsync();
-        return Results.Ok("Usuário deletado com sucesso.");
+        return Results.NoContent();
     }
     return Results.NotFound("Nenhum usuário encontrado com ID fornecido.");
 })
 .WithSummary("Deleta um Usuário pelo ID")
 .WithDescription("Deleta um Usuário pelo ID informado. Retorna 204 No Content caso deletado com sucesso, ou erro se não achado.")
-.Produces(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status204NoContent)
 .Produces(StatusCodes.Status404NotFound)
 .Produces(StatusCodes.Status500InternalServerError); 
 
@@ -724,7 +724,7 @@ postagens.MapPut("/{id}", async ([Description("Identificador único de Postagem"
         .ThenInclude(c => c.Usuario)
         .FirstOrDefaultAsync(p => p.PostagemId == postagem.PostagemId);
     
-    var postagemDto = PostagemReadDto.ToDto(postagemCompleta);
+    var postagemDto = PostagemReadDto.ToDto(postagemCompleta!);
     
     await hubContext.Clients.Group("postagens").SendAsync("PostagemCriadaOuAtualizada", postagemDto);
 
@@ -746,13 +746,13 @@ postagens.MapDelete("/{id}", async ([Description("Identificador único de Postag
         db.Postagens.Remove(existingPostagem);
         await db.SaveChangesAsync();
         await hubContext.Clients.Group("postagens").SendAsync("PostagemRemovida", new { PostagemId = id });
-        return Results.Ok("Postagem removida com sucesso.");
+        return Results.NoContent();
     }
     return Results.NotFound("Nenhuma postagem encontrada com ID fornecido.");
 })
     .WithSummary("Deleta uma Postagem pelo ID")
     .WithDescription("Deleta uma Postagem pelo ID informado. Retorna 204 No Content caso deletada com sucesso, ou erro se não achado.")
-    .Produces(StatusCodes.Status200OK)
+    .Produces(StatusCodes.Status204NoContent)
     .Produces(StatusCodes.Status404NotFound)
     .Produces(StatusCodes.Status500InternalServerError); 
 
@@ -858,9 +858,9 @@ comentarios.MapPost("/", async (ComentarioPostDto dto, AppDbContext db, IHubCont
             .Include(c => c.Usuario) 
             .FirstOrDefaultAsync(c => c.ComentarioId == comentario.ComentarioId);
     
-    var comentarioDto = ComentarioReadDto.ToDto(comentarioCompleto);
+    var comentarioDto = ComentarioReadDto.ToDto(comentarioCompleto!);
     
-    await hubContext.Clients.Group($"postagem-{comentarioCompleto.PostagemId}").SendAsync("ComentarioCriado", comentarioDto);
+    await hubContext.Clients.Group($"postagem-{comentarioCompleto!.PostagemId}").SendAsync("ComentarioCriado", comentarioDto);
 
     return Results.Created($"comentarios/{comentario.ComentarioId}", comentarioDto);
 })
@@ -907,9 +907,9 @@ comentarios.MapPut("/{id}", async ([Description("Identificador único de coment�
         .Include(c => c.Usuario) 
         .FirstOrDefaultAsync(c => c.ComentarioId == comentarioExistente.ComentarioId);
     
-    var comentarioDto = ComentarioReadDto.ToDto(comentarioCompleto);
+    var comentarioDto = ComentarioReadDto.ToDto(comentarioCompleto!);
     
-    await hubContext.Clients.Group($"postagem-{comentarioExistente.PostagemId}").SendAsync("ComentarioAtualizado", comentarioDto);
+    await hubContext.Clients.Group($"postagem-{comentarioCompleto!.PostagemId}").SendAsync("ComentarioAtualizado", comentarioDto);
     
     return Results.Ok(comentarioDto);
 })
@@ -930,7 +930,7 @@ comentarios.MapDelete("/{id}", async ([Description("Identificador único de Come
         await db.SaveChangesAsync();
         
         await hubContext.Clients.Group($"postagem-{existingComentario.PostagemId}").SendAsync("ComentarioRemovido", new { ComentarioId = id, PostagemId = existingComentario.PostagemId });
-        return Results.Ok("Comentário deletado com sucesso.");
+        return Results.NoContent();
     }
     return Results.NotFound("Nenhum comentário encontrado com ID fornecido.");
 })
@@ -1074,6 +1074,7 @@ confirmaPostagens.MapDelete("/usuario/{usuarioId}/postagem/{postagemId}",
             .SendAsync("AtualizarContagemConfirmacoes", new { PostagemId = postagemId, Contagem = novaContagem });
 
         return Results.NoContent();
+        
     }).WithSummary("Remove a confirmação de uma postagem pelos IDs")
     .WithDescription("Deleta um Confirma Postagem pelos IDs informados. Retorna 204 No Content caso deletado com sucesso, ou erro se não achado.")
     .Produces(StatusCodes.Status204NoContent)
