@@ -12,6 +12,14 @@ Nossa missão é transformar a forma como desastres urbanos são monitorados e g
 
 ![App Screenshot](https://imgur.com/H7tmAzx.png)
 
+## 🛠️ Tecnologias utilizadas
+
+- ASP.NET Core 9
+- Entity Framework Core
+- Oracle SQL Server
+- Minimal API
+- Scalar
+- SignalR
 
 ## Instalação
 
@@ -21,13 +29,9 @@ Antes de instalar, verifique se os seguintes itens estão instalados:
 
 - .NET 9 SDK
 
-- Oracle Database ou acesso a um banco Oracle
+- Visual Studio 2022+ ou Rider
 
-- Oracle Entity Framework Core Provider
-
-- Visual Studio 2022+ ou Rider (opcional)
-
-- Git (opcional)
+- Git
 
 ### Clone o repositório e acesse o diretório:
 
