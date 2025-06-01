@@ -148,7 +148,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "nomeUsuario": "Roberto Silva",
@@ -184,7 +184,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "nomeUsuario": "Roberto Silva dos Santos",
@@ -806,7 +806,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "tituloPostagem": "Enchente preocupante agora no bairro da Liberdade",
@@ -855,7 +855,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "tituloPostagem": "Inundação preocupante no bairro da Liberdade",
@@ -1058,7 +1058,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 
 ```json
 {
@@ -1095,7 +1095,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 
 ```json
 {
@@ -1223,7 +1223,7 @@ Códigos de Resposta
   POST /confirmaPostagem
 ```
 
-Request Body:
+Request Body para Testes:
 
 ```json
 {
@@ -1278,7 +1278,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body (Usuário padrão):
+Exemplo de Request Body (Usuário padrão) para Testes:
 ```json
 {
   "emailUsuario": "zeca.barros@gmail.com",
@@ -1286,7 +1286,7 @@ Exemplo de Request Body (Usuário padrão):
 }
 ```
 
-Exemplo de Request Body (Funcionário): 
+Exemplo de Request Body (Funcionário) para Testes: 
 ```json
 {
   "emailUsuario": "ana.souza@gmail.com",
