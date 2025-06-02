@@ -4431,11 +4431,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pugpl\\RiderProjects\\2tdsbProjetos\\API-GlobalSolution\\API-GlobalSolution.csproj",
+      "projectUniqueName": "D:\\Aulas\\gs-dotnet\\API-GlobalSolution\\API-GlobalSolution.csproj",
       "projectName": "API-GlobalSolution",
-      "projectPath": "C:\\Users\\pugpl\\RiderProjects\\2tdsbProjetos\\API-GlobalSolution\\API-GlobalSolution.csproj",
+      "projectPath": "D:\\Aulas\\gs-dotnet\\API-GlobalSolution\\API-GlobalSolution.csproj",
       "packagesPath": "C:\\Users\\pugpl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pugpl\\RiderProjects\\2tdsbProjetos\\API-GlobalSolution\\obj\\",
+      "outputPath": "D:\\Aulas\\gs-dotnet\\API-GlobalSolution\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pugpl\\AppData\\Roaming\\NuGet\\NuGet.Config",

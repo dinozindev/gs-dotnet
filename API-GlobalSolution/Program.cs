@@ -29,18 +29,6 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// adiciona o CORS na aplicação
-// builder.Services.AddCors(options =>
-// {
-//     options.AddDefaultPolicy(opt =>
-//     {
-//         opt.AllowAnyOrigin();
-//         opt.AllowAnyMethod(); // permite que você faça requisições de qualquer método (GET, POST, PUT, DELETE...)
-//         opt.AllowAnyHeader();
-//         opt.WithExposedHeaders("Content-Type", "Accept");
-//     });
-// });
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(opt =>

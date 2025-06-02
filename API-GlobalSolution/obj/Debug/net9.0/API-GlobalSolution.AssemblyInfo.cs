@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("API-GlobalSolution")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c1a53b0b328e562859905874d03524d80944769")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27b04a1b1cc5127f77157bea5bd79d55a8e3b8c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("API-GlobalSolution")]
 [assembly: System.Reflection.AssemblyTitleAttribute("API-GlobalSolution")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
