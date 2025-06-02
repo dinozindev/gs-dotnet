@@ -12,6 +12,14 @@ Nossa missão é transformar a forma como desastres urbanos são monitorados e g
 
 ![App Screenshot](https://imgur.com/H7tmAzx.png)
 
+## 🛠️ Tecnologias utilizadas
+
+- ASP.NET Core 9
+- Entity Framework Core
+- Oracle SQL Server
+- Minimal API
+- Scalar
+- SignalR
 
 ## Instalação
 
@@ -21,13 +29,9 @@ Antes de instalar, verifique se os seguintes itens estão instalados:
 
 - .NET 9 SDK
 
-- Oracle Database ou acesso a um banco Oracle
+- Visual Studio 2022+ ou Rider
 
-- Oracle Entity Framework Core Provider
-
-- Visual Studio 2022+ ou Rider (opcional)
-
-- Git (opcional)
+- Git
 
 ### Clone o repositório e acesse o diretório:
 
@@ -144,7 +148,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "nomeUsuario": "Roberto Silva",
@@ -180,7 +184,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "nomeUsuario": "Roberto Silva dos Santos",
@@ -802,7 +806,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "tituloPostagem": "Enchente preocupante agora no bairro da Liberdade",
@@ -851,7 +855,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 ```json
 {
   "tituloPostagem": "Inundação preocupante no bairro da Liberdade",
@@ -1054,7 +1058,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 
 ```json
 {
@@ -1091,7 +1095,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body:
+Exemplo de Request Body para Testes:
 
 ```json
 {
@@ -1219,7 +1223,7 @@ Códigos de Resposta
   POST /confirmaPostagem
 ```
 
-Request Body:
+Request Body para Testes:
 
 ```json
 {
@@ -1274,7 +1278,7 @@ Request Body:
 }
 ```
 
-Exemplo de Request Body (Usuário padrão):
+Exemplo de Request Body (Usuário padrão) para Testes:
 ```json
 {
   "emailUsuario": "zeca.barros@gmail.com",
@@ -1282,7 +1286,7 @@ Exemplo de Request Body (Usuário padrão):
 }
 ```
 
-Exemplo de Request Body (Funcionário): 
+Exemplo de Request Body (Funcionário) para Testes: 
 ```json
 {
   "emailUsuario": "ana.souza@gmail.com",
