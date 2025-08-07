@@ -3,12 +3,17 @@ using System.Threading.RateLimiting;
 using API_GlobalSolution;
 using API_GlobalSolution.Dtos;
 using API_GlobalSolution.Models;
+using DotNetEnv;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Env.Load();
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 builder.Services.AddDbContext<AppDbContext>(options => 
      options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
@@ -68,9 +73,10 @@ var comentarios = app.MapGroup("/comentarios").WithTags("Comentários");
 var confirmaPostagens = app.MapGroup("/confirmaPostagens").WithTags("Confirma Postagens");
 var login = app.MapGroup("/login").WithTags("Login");
 
-// buscar postagens por Zona
-// buscar postagens por Tipo de Desastre
-// SignalR(?)
+// valor padrão do parâmetro de rotas que exigem id
+const string idParam = "/{id}";
+// valor padrão do parâmetro do tipo de conexão
+const string applicationString = "application/json";
 
 // realiza o Login na Aplicação Mobile
 login.MapPost("/", async (LoginDto loginDto, AppDbContext db) =>
@@ -131,7 +137,7 @@ usuarios.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // busca usuário pelo ID
-usuarios.MapGet("/{id}", async ([Description("Identificador único do Usuário")] int id, AppDbContext db) =>
+usuarios.MapGet(idParam, async ([Description("Identificador único do Usuário")] int id, AppDbContext db) =>
     {
         var usuario = await db.Usuarios
             .FirstOrDefaultAsync(u => u.UsuarioId == id);
@@ -208,7 +214,7 @@ usuarios.MapPost("/", async (UsuarioPostDto dto, AppDbContext db) =>
     return Results.Created($"/usuarios/{usuario.UsuarioId}", usuario);
     
 })
-    .Accepts<UsuarioPostDto>("application/json")
+    .Accepts<UsuarioPostDto>(applicationString)
     .WithSummary("Cria um usuário")
     .WithDescription("Cria um usuário no sistema.")
     .Produces<Usuario>(StatusCodes.Status201Created)
@@ -217,7 +223,7 @@ usuarios.MapPost("/", async (UsuarioPostDto dto, AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // atualiza os dados de um usuário
-usuarios.MapPut("/{id}", async ([Description("Identificador único do Usuário")] int id, UsuarioPostDto dto, AppDbContext db) =>
+usuarios.MapPut(idParam, async ([Description("Identificador único do Usuário")] int id, UsuarioPostDto dto, AppDbContext db) =>
 {
     var usuarioExistente = await db.Usuarios.FindAsync(id);
     if (usuarioExistente == null)
@@ -273,7 +279,7 @@ usuarios.MapPut("/{id}", async ([Description("Identificador único do Usuário")
     await db.SaveChangesAsync();
     return Results.Ok(usuarioExistente);
 })
-.Accepts<UsuarioPostDto>("application/json")
+.Accepts<UsuarioPostDto>(applicationString)
 .WithSummary("Atualiza um usuário")
 .WithDescription("Atualiza os dados de um usuário existente.")
 .Produces<Usuario>(StatusCodes.Status200OK)
@@ -283,7 +289,7 @@ usuarios.MapPut("/{id}", async ([Description("Identificador único do Usuário")
 .Produces(StatusCodes.Status500InternalServerError);
 
 // deleta um usuário
-usuarios.MapDelete("/{id}", async ([Description("Identificador único do Usuário")] int id, AppDbContext db) =>
+usuarios.MapDelete(idParam, async ([Description("Identificador único do Usuário")] int id, AppDbContext db) =>
 {
     if (await db.Usuarios.FindAsync(id) is { } existingUsuario)
     {
@@ -317,7 +323,7 @@ bairros.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // Retorna bairro por ID
-bairros.MapGet("/{id}", async ([Description("Identificador único do Bairro")] int id, AppDbContext db) =>
+bairros.MapGet(idParam, async ([Description("Identificador único do Bairro")] int id, AppDbContext db) =>
 {
     var bairro = await db.Bairros.FirstOrDefaultAsync(b => b.BairroId == id);
     
@@ -354,7 +360,7 @@ tiposDesastres.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna um tipo de desastre pelo ID
-tiposDesastres.MapGet("/{id}", async ([Description("Identificador único do Tipo de Desastre")] int id, AppDbContext db) =>
+tiposDesastres.MapGet(idParam, async ([Description("Identificador único do Tipo de Desastre")] int id, AppDbContext db) =>
     {
         var tipoDesastreObtido = await db.TipoDesastres.FirstOrDefaultAsync(t => t.TipoDesastreId == id);
         if (tipoDesastreObtido == null)
@@ -393,7 +399,7 @@ enderecos.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna um endereço pelo ID
-enderecos.MapGet("/{id}", async ([Description("Identificador único do Endereço")] int id, AppDbContext db) =>
+enderecos.MapGet(idParam, async ([Description("Identificador único do Endereço")] int id, AppDbContext db) =>
 {
     var enderecoObtido = await db.Enderecos
         .Include(e => e.Bairro)
@@ -434,7 +440,7 @@ sensores.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna um sensor pelo ID
-sensores.MapGet("/{id}", async ([Description("Identificador único de Sensor")] int id, AppDbContext db) =>
+sensores.MapGet(idParam, async ([Description("Identificador único de Sensor")] int id, AppDbContext db) =>
 {
     var sensorObtido = await db.Sensores
             .Include(s => s.Bairro)
@@ -477,7 +483,7 @@ alertas.MapGet("/", async (AppDbContext db) =>
 .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna Alerta por ID
-alertas.MapGet("/{id}", async ([Description("Identificador único de Alerta")] int id, AppDbContext db) =>
+alertas.MapGet(idParam, async ([Description("Identificador único de Alerta")] int id, AppDbContext db) =>
 {
     var alertaObtido = await db.Alertas
         .Include(a => a.Sensor)
@@ -524,7 +530,7 @@ postagens.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna Postagem por ID
-postagens.MapGet("/{id}", async ([Description("Identificador único de Postagem")] int id, AppDbContext db) =>
+postagens.MapGet(idParam, async ([Description("Identificador único de Postagem")] int id, AppDbContext db) =>
 {
     var postagemObtida = await db.Postagens
         .Include(p => p.Comentarios)
@@ -645,7 +651,7 @@ postagens.MapPost("/", async (PostagemPostDto dto, AppDbContext db, IHubContext<
     
     return Results.Created($"/postagens/{postagem.PostagemId}", postagemDto);
 })
-    .Accepts<PostagemPostDto>("application/json")
+    .Accepts<PostagemPostDto>(applicationString)
     .WithSummary("Cria uma Postagem")
     .WithDescription("Cria uma Postagem no sistema.")
     .Produces(StatusCodes.Status201Created)
@@ -653,7 +659,7 @@ postagens.MapPost("/", async (PostagemPostDto dto, AppDbContext db, IHubContext<
     .Produces(StatusCodes.Status500InternalServerError);
 
 // atualizar postagem
-postagens.MapPut("/{id}", async ([Description("Identificador único de Postagem")] int id, PostagemPutDto dto, AppDbContext db, IHubContext<FeedHub> hubContext) =>
+postagens.MapPut(idParam, async ([Description("Identificador único de Postagem")] int id, PostagemPutDto dto, AppDbContext db, IHubContext<FeedHub> hubContext) =>
 {
     // Verifica se a postagem existe
     var postagem = await db.Postagens.FindAsync(id);
@@ -718,7 +724,7 @@ postagens.MapPut("/{id}", async ([Description("Identificador único de Postagem"
 
     return Results.Ok("Postagem atualizada com sucesso.");
 })
-    .Accepts<PostagemPutDto>("application/json")
+    .Accepts<PostagemPutDto>(applicationString)
     .WithSummary("Atualiza uma Postagem")
     .WithDescription("Atualiza os dados de uma Postagem existente.")
     .Produces(StatusCodes.Status200OK)
@@ -727,7 +733,7 @@ postagens.MapPut("/{id}", async ([Description("Identificador único de Postagem"
     .Produces(StatusCodes.Status500InternalServerError);
 
 // deletar postagem
-postagens.MapDelete("/{id}", async ([Description("Identificador único de Postagem")] int id, AppDbContext db, IHubContext<FeedHub> hubContext) =>
+postagens.MapDelete(idParam, async ([Description("Identificador único de Postagem")] int id, AppDbContext db, IHubContext<FeedHub> hubContext) =>
 {
     if (await db.Postagens.FindAsync(id) is { } existingPostagem)
     {
@@ -771,7 +777,7 @@ comentarios.MapGet("/", async (AppDbContext db) =>
     .Produces(StatusCodes.Status500InternalServerError);
 
 // retorna um comentário pelo ID
-comentarios.MapGet("/{id}", async ([Description("Identificador único de Comentário")] int id, AppDbContext db) =>
+comentarios.MapGet(idParam, async ([Description("Identificador único de Comentário")] int id, AppDbContext db) =>
 {
     var comentarioObtido = await db.Comentarios
             .Include(c => c.Postagem)
@@ -852,7 +858,7 @@ comentarios.MapPost("/", async (ComentarioPostDto dto, AppDbContext db, IHubCont
 
     return Results.Created($"comentarios/{comentario.ComentarioId}", comentarioDto);
 })
-    .Accepts<ComentarioPostDto>("application/json")
+    .Accepts<ComentarioPostDto>(applicationString)
     .WithSummary("Cria um Comentário")
     .WithDescription("Cria um Comentário no sistema.")
     .Produces(StatusCodes.Status201Created)
@@ -861,7 +867,7 @@ comentarios.MapPost("/", async (ComentarioPostDto dto, AppDbContext db, IHubCont
     .Produces(StatusCodes.Status500InternalServerError);
 
 // atualizar um comentario
-comentarios.MapPut("/{id}", async ([Description("Identificador único de comentário")] int id, ComentarioPutDto dto, AppDbContext db, IHubContext<FeedHub> hubContext) =>
+comentarios.MapPut(idParam, async ([Description("Identificador único de comentário")] int id, ComentarioPutDto dto, AppDbContext db, IHubContext<FeedHub> hubContext) =>
 {
     var comentarioExistente = await db.Comentarios.FindAsync(id);
     if (comentarioExistente == null)
@@ -901,7 +907,7 @@ comentarios.MapPut("/{id}", async ([Description("Identificador único de coment�
     
     return Results.Ok(comentarioDto);
 })
-    .Accepts<ComentarioPutDto>("application/json")
+    .Accepts<ComentarioPutDto>(applicationString)
     .WithSummary("Atualiza um Comentário")
     .WithDescription("Atualiza os dados de um Comentário existente.")
     .Produces(StatusCodes.Status200OK)
@@ -910,7 +916,7 @@ comentarios.MapPut("/{id}", async ([Description("Identificador único de coment�
     .Produces(StatusCodes.Status500InternalServerError);
 
 // deletar um comentario
-comentarios.MapDelete("/{id}", async ([Description("Identificador único de Comentário")] int id, AppDbContext db, IHubContext<FeedHub> hubContext) =>
+comentarios.MapDelete(idParam, async ([Description("Identificador único de Comentário")] int id, AppDbContext db, IHubContext<FeedHub> hubContext) =>
 {
     if (await db.Comentarios.FindAsync(id) is { } existingComentario)
     {
@@ -1031,7 +1037,7 @@ confirmaPostagens.MapPost("/", async (ConfirmaPostagemPostDto dto, AppDbContext 
 
     return Results.Created($"/confirmaPostagens/{dto.UsuarioId}/{dto.PostagemId}", "Postagem confirmada com sucesso!");
 })
-    .Accepts<ConfirmaPostagemPostDto>("application/json")
+    .Accepts<ConfirmaPostagemPostDto>(applicationString)
     .WithSummary("Confirma uma postagem")
     .WithDescription("Cria (confirma) uma Confirma Postagem no sistema.")
     .Produces(StatusCodes.Status201Created)
