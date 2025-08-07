@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NQWYDihRDEA=",
+  "dgSpecHash": "oH5yPD1FVu8=",
   "success": true,
-  "projectFilePath": "D:\\Aulas\\gs-dotnet\\API-GlobalSolution\\API-GlobalSolution.csproj",
+  "projectFilePath": "C:\\Users\\pugpl\\RiderProjects\\2tdsbProjetos\\API-GlobalSolution\\API-GlobalSolution.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pugpl\\.nuget\\packages\\dotnetenv\\3.1.1\\dotnetenv.3.1.1.nupkg.sha512",
     "C:\\Users\\pugpl\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
