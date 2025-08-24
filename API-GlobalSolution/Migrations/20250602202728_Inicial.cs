@@ -9,16 +9,33 @@ namespace API_GlobalSolution.Migrations
     public partial class Inicial : Migration
     {
         /// <inheritdoc />
+        const string bairro = "BAIRRO";
+        const string tipoDesastre = "TIPO_DESASTRE";
+        const string usuario = "USUARIO";
+        const string endereco = "ENDERECO";
+        const string sensor = "SENSOR";
+        const string postagem = "POSTAGEM";
+        const string alerta = "ALERTA";
+        const string comentario = "COMENTARIO";
+        const string number10 = "NUMBER(10)";
+        const string oracleIdentity = "Oracle:Identity";
+        const string incrementBy1 = "START WITH 1 INCREMENT BY 1";
+        const string nvarchar255 = "NVARCHAR2(255)";
+        const string nvarchar100 = "NVARCHAR2(100)";
+        const string nvarchar50 = "NVARCHAR2(50)";
+        const string timestamp7 = "TIMESTAMP(7)";
+        
+        
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BAIRRO",
+                name: bairro,
                 columns: table => new
                 {
-                    ID_BAIRRO = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NOME_BAIRRO = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    ZONA_BAIRRO = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false)
+                    ID_BAIRRO = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    NOME_BAIRRO = table.Column<string>(type: nvarchar100, maxLength: 100, nullable: false),
+                    ZONA_BAIRRO = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,13 +46,13 @@ namespace API_GlobalSolution.Migrations
                 "ALTER TABLE \"BAIRRO\" ADD CONSTRAINT CHK_ZONA_BAIRRO CHECK (\"ZONA_BAIRRO\" IN ('Zona Sul', 'Zona Norte', 'Zona Leste', 'Zona Oeste', 'Zona Central'))");
             
             migrationBuilder.CreateTable(
-                name: "TIPO_DESASTRE",
+                name: tipoDesastre,
                 columns: table => new
                 {
-                    ID_DESASTRE = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NOME_DESASTRE = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    DESCRICAO_DESASTRE = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: false)
+                    ID_DESASTRE = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    NOME_DESASTRE = table.Column<string>(type: nvarchar100, maxLength: 100, nullable: false),
+                    DESCRICAO_DESASTRE = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,16 +64,16 @@ namespace API_GlobalSolution.Migrations
             );
             
             migrationBuilder.CreateTable(
-                name: "USUARIO",
+                name: usuario,
                 columns: table => new
                 {
-                    ID_USUARIO = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NOME_USUARIO = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
+                    ID_USUARIO = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    NOME_USUARIO = table.Column<string>(type: nvarchar100, maxLength: 100, nullable: false),
                     EMAIL_USUARIO = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false),
-                    SENHA_USUARIO = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    SENHA_USUARIO = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false),
                     TELEFONE_USUARIO = table.Column<string>(type: "NVARCHAR2(11)", maxLength: 11, nullable: false),
-                    TIPO_USUARIO = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false, defaultValue: "Usuário")
+                    TIPO_USUARIO = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false, defaultValue: "Usuário")
                 },
                 constraints: table =>
                 {
@@ -68,16 +85,16 @@ namespace API_GlobalSolution.Migrations
                 );
 
             migrationBuilder.CreateTable(
-                name: "ENDERECO",
+                name: endereco,
                 columns: table => new
                 {
-                    ID_ENDERECO = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    LOGRADOURO_ENDERECO = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: true),
+                    ID_ENDERECO = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    LOGRADOURO_ENDERECO = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: true),
                     NUMERO_ENDERECO = table.Column<string>(type: "NVARCHAR2(10)", maxLength: 10, nullable: true),
-                    COMPLEMENTO_ENDERECO = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: true),
+                    COMPLEMENTO_ENDERECO = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: true),
                     CEP_ENDERECO = table.Column<string>(type: "NVARCHAR2(9)", maxLength: 9, nullable: true),
-                    BAIRRO_ID_BAIRRO = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    BAIRRO_ID_BAIRRO = table.Column<int>(type: number10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,21 +102,21 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "ENDERECO_BAIRRO_FK",
                         column: x => x.BAIRRO_ID_BAIRRO,
-                        principalTable: "BAIRRO",
+                        principalTable: bairro,
                         principalColumn: "ID_BAIRRO",
                         onDelete: ReferentialAction.Cascade);
                 });
 
 
             migrationBuilder.CreateTable(
-                name: "SENSOR",
+                name: sensor,
                 columns: table => new
                 {
-                    ID_SENSOR = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NOME_SENSOR = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    TIPO_SENSOR = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
-                    BAIRRO_ID_BAIRRO = table.Column<int>(type: "NUMBER(10)", nullable: true)
+                    ID_SENSOR = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    NOME_SENSOR = table.Column<string>(type: nvarchar100, maxLength: 100, nullable: false),
+                    TIPO_SENSOR = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false),
+                    BAIRRO_ID_BAIRRO = table.Column<int>(type: number10, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,7 +124,7 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "SENSOR_BAIRRO_FK",
                         column: x => x.BAIRRO_ID_BAIRRO,
-                        principalTable: "BAIRRO",
+                        principalTable: bairro,
                         principalColumn: "ID_BAIRRO");
                 });
 
@@ -115,16 +132,16 @@ namespace API_GlobalSolution.Migrations
                 name: "POSTAGEM",
                 columns: table => new
                 {
-                    ID_POSTAGEM = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    TITULO_POSTAGEM = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    DESCRICAO_POSTAGEM = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: false),
-                    DATA_POSTAGEM = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    TIPO_POSTAGEM = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false, defaultValue: "Usuário"),
-                    STATUS_POSTAGEM = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
-                    USUARIO_ID_USUARIO = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    ENDERECO_ID_ENDERECO = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    TIPO_DESASTRE_ID_DESASTRE = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    ID_POSTAGEM = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    TITULO_POSTAGEM = table.Column<string>(type: nvarchar100, maxLength: 100, nullable: false),
+                    DESCRICAO_POSTAGEM = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: false),
+                    DATA_POSTAGEM = table.Column<DateTime>(type: timestamp7, nullable: false),
+                    TIPO_POSTAGEM = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false, defaultValue: "Usuário"),
+                    STATUS_POSTAGEM = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false, defaultValue: "Ativo"),
+                    USUARIO_ID_USUARIO = table.Column<int>(type: number10, nullable: false),
+                    ENDERECO_ID_ENDERECO = table.Column<int>(type: number10, nullable: false),
+                    TIPO_DESASTRE_ID_DESASTRE = table.Column<int>(type: number10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,19 +149,19 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "POSTAGEM_ENDERECO_FK",
                         column: x => x.ENDERECO_ID_ENDERECO,
-                        principalTable: "ENDERECO",
+                        principalTable: endereco,
                         principalColumn: "ID_ENDERECO",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "POSTAGEM_TIPO_DESASTRE_FK",
                         column: x => x.TIPO_DESASTRE_ID_DESASTRE,
-                        principalTable: "TIPO_DESASTRE",
+                        principalTable: tipoDesastre,
                         principalColumn: "ID_DESASTRE",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "POSTAGEM_USUARIO_FK",
                         column: x => x.USUARIO_ID_USUARIO,
-                        principalTable: "USUARIO",
+                        principalTable: usuario,
                         principalColumn: "ID_USUARIO");
                 });
             
@@ -157,17 +174,17 @@ namespace API_GlobalSolution.Migrations
                 );
                 
             migrationBuilder.CreateTable(
-                name: "ALERTA",
+                name: alerta,
                 columns: table => new
                 {
-                    ID_ALERTA = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NIVEL_RISCO = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
-                    DATA_ALERTA = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    DESCRICAO_ALERTA = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: true),
-                    STATUS_ALERTA = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
-                    SENSOR_ID_SENSOR = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    TIPO_DESASTRE_ID_DESASTRE = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    ID_ALERTA = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    NIVEL_RISCO = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false),
+                    DATA_ALERTA = table.Column<DateTime>(type: timestamp7, nullable: false),
+                    DESCRICAO_ALERTA = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: true),
+                    STATUS_ALERTA = table.Column<string>(type: nvarchar50, maxLength: 50, nullable: false, defaultValue: "Ativo"),
+                    SENSOR_ID_SENSOR = table.Column<int>(type: number10, nullable: false),
+                    TIPO_DESASTRE_ID_DESASTRE = table.Column<int>(type: number10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,13 +192,13 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "ALERTA_SENSOR_FK",
                         column: x => x.SENSOR_ID_SENSOR,
-                        principalTable: "SENSOR",
+                        principalTable: sensor,
                         principalColumn: "ID_SENSOR",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "ALERTA_TIPO_DESASTRE_FK",
                         column: x => x.TIPO_DESASTRE_ID_DESASTRE,
-                        principalTable: "TIPO_DESASTRE",
+                        principalTable: tipoDesastre,
                         principalColumn: "ID_DESASTRE",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -195,15 +212,15 @@ namespace API_GlobalSolution.Migrations
                     );
                     
             migrationBuilder.CreateTable(
-                name: "COMENTARIO",
+                name: comentario,
                 columns: table => new
                 {
-                    ID_COMENTARIO = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    TEXTO_COMENTARIO = table.Column<string>(type: "NVARCHAR2(255)", maxLength: 255, nullable: false),
-                    DATA_COMENTARIO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    POSTAGEM_ID_POSTAGEM = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    USUARIO_ID_USUARIO = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    ID_COMENTARIO = table.Column<int>(type: number10, nullable: false)
+                        .Annotation(oracleIdentity, incrementBy1),
+                    TEXTO_COMENTARIO = table.Column<string>(type: nvarchar255, maxLength: 255, nullable: false),
+                    DATA_COMENTARIO = table.Column<DateTime>(type: timestamp7, nullable: false),
+                    POSTAGEM_ID_POSTAGEM = table.Column<int>(type: number10, nullable: false),
+                    USUARIO_ID_USUARIO = table.Column<int>(type: number10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,13 +228,13 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "COMENTARIO_POSTAGEM_FK",
                         column: x => x.POSTAGEM_ID_POSTAGEM,
-                        principalTable: "POSTAGEM",
+                        principalTable: postagem,
                         principalColumn: "ID_POSTAGEM",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "COMENTARIO_USUARIO_FK",
                         column: x => x.USUARIO_ID_USUARIO,
-                        principalTable: "USUARIO",
+                        principalTable: usuario,
                         principalColumn: "ID_USUARIO");
                 });
             
@@ -225,9 +242,9 @@ namespace API_GlobalSolution.Migrations
                 name: "CONFIRMA_POSTAGEM",
                 columns: table => new
                 {
-                    ID_USUARIO = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    ID_POSTAGEM = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    DATA_CONFIRMA = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
+                    ID_USUARIO = table.Column<int>(type: number10, nullable: false),
+                    ID_POSTAGEM = table.Column<int>(type: number10, nullable: false),
+                    DATA_CONFIRMA = table.Column<DateTime>(type: timestamp7, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,41 +252,41 @@ namespace API_GlobalSolution.Migrations
                     table.ForeignKey(
                         name: "CONFIRMA_POSTAGEM_POSTAGEM_FK",
                         column: x => x.ID_POSTAGEM,
-                        principalTable: "POSTAGEM",
+                        principalTable: postagem,
                         principalColumn: "ID_POSTAGEM",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "CONFIRMA_POSTAGEM_USUARIO_FK",
                         column: x => x.ID_USUARIO,
-                        principalTable: "USUARIO",
+                        principalTable: usuario,
                         principalColumn: "ID_USUARIO",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ALERTA_SENSOR_ID_SENSOR",
-                table: "ALERTA",
+                table: alerta,
                 column: "SENSOR_ID_SENSOR");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ALERTA_TIPO_DESASTRE_ID_DESASTRE",
-                table: "ALERTA",
+                table: alerta,
                 column: "TIPO_DESASTRE_ID_DESASTRE");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BAIRRO_NOME_BAIRRO",
-                table: "BAIRRO",
+                table: bairro,
                 column: "NOME_BAIRRO",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_COMENTARIO_POSTAGEM_ID_POSTAGEM",
-                table: "COMENTARIO",
+                table: comentario,
                 column: "POSTAGEM_ID_POSTAGEM");
 
             migrationBuilder.CreateIndex(
                 name: "IX_COMENTARIO_USUARIO_ID_USUARIO",
-                table: "COMENTARIO",
+                table: comentario,
                 column: "USUARIO_ID_USUARIO");
 
             migrationBuilder.CreateIndex(
@@ -279,38 +296,38 @@ namespace API_GlobalSolution.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ENDERECO_BAIRRO_ID_BAIRRO",
-                table: "ENDERECO",
+                table: endereco,
                 column: "BAIRRO_ID_BAIRRO");
 
             migrationBuilder.CreateIndex(
                 name: "IX_POSTAGEM_ENDERECO_ID_ENDERECO",
-                table: "POSTAGEM",
+                table: postagem,
                 column: "ENDERECO_ID_ENDERECO");
 
             migrationBuilder.CreateIndex(
                 name: "IX_POSTAGEM_TIPO_DESASTRE_ID_DESASTRE",
-                table: "POSTAGEM",
+                table: postagem,
                 column: "TIPO_DESASTRE_ID_DESASTRE");
 
             migrationBuilder.CreateIndex(
                 name: "IX_POSTAGEM_USUARIO_ID_USUARIO",
-                table: "POSTAGEM",
+                table: postagem,
                 column: "USUARIO_ID_USUARIO");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SENSOR_BAIRRO_ID_BAIRRO",
-                table: "SENSOR",
+                table: sensor,
                 column: "BAIRRO_ID_BAIRRO");
 
             migrationBuilder.CreateIndex(
                 name: "IX_USUARIO_EMAIL_USUARIO",
-                table: "USUARIO",
+                table: usuario,
                 column: "EMAIL_USUARIO",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_USUARIO_TELEFONE_USUARIO",
-                table: "USUARIO",
+                table: usuario,
                 column: "TELEFONE_USUARIO",
                 unique: true);
         }
@@ -319,31 +336,31 @@ namespace API_GlobalSolution.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ALERTA");
+                name: alerta);
 
             migrationBuilder.DropTable(
-                name: "COMENTARIO");
+                name: comentario);
 
             migrationBuilder.DropTable(
                 name: "CONFIRMA_POSTAGEM");
 
             migrationBuilder.DropTable(
-                name: "SENSOR");
+                name: sensor);
 
             migrationBuilder.DropTable(
-                name: "POSTAGEM");
+                name: postagem);
 
             migrationBuilder.DropTable(
-                name: "ENDERECO");
+                name: endereco);
 
             migrationBuilder.DropTable(
-                name: "TIPO_DESASTRE");
+                name: tipoDesastre);
 
             migrationBuilder.DropTable(
-                name: "USUARIO");
+                name: usuario);
 
             migrationBuilder.DropTable(
-                name: "BAIRRO");
+                name: bairro);
         }
     }
 }

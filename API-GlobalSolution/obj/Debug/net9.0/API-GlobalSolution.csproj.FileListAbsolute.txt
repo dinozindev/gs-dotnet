@@ -142,3 +142,5 @@ C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\obj\Debug\net9.0\r
 C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\obj\Debug\net9.0\API-GlobalSolution.pdb
 C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\obj\Debug\net9.0\API-GlobalSolution.genruntimeconfig.cache
 C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\obj\Debug\net9.0\ref\API-GlobalSolution.dll
+C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\bin\Debug\net9.0\DotNetEnv.dll
+C:\Users\pugpl\RiderProjects\2tdsbProjetos\API-GlobalSolution\bin\Debug\net9.0\Sprache.dll
